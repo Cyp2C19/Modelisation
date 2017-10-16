@@ -76,7 +76,7 @@ def number_of_atoms(h2o, dopc, dope):
         new_h2o.append(len(h2o[i]))
         new_dope.append(len(dope[i]))
         new_dopc.append(len(dopc[i]))
-    return(new_h2o, new_dope, new_dopc)
+    return(new_h2o, new_dopc, new_dope)
 
 def mass_density(h2o, dopc, dope):
     """
@@ -136,20 +136,20 @@ def number_density(h2o, dopc, dope):
        Fonction qui permet blablablabla
     """
     new_h2o = []
-    new_dope = []
     new_dopc = []
+    new_dope = []
 
     for i in range(nb_slices + 1):
         total = h2o[i] + dopc[i] + dope[i]
         if(total == 0):
             new_h2o.append(0)
-            new_dope.append(0)
             new_dopc.append(0)
+            new_dope.append(0)
         else:
-            # Calcul pourcentages d'atomes en fonction total d'atomes
+            # Calcul pourcentage nombre d'atomes en fonction total d'atomes
             new_h2o.append(round(h2o[i] / total, 4) * 100)
-            new_dope.append(round(dope[i] / total, 4) * 100)
             new_dopc.append(round(dopc[i] / total, 4) * 100)
+            new_dope.append(round(dope[i] / total, 4) * 100)
     return(new_h2o, new_dopc, new_dope)
 
 def draw_density_profile(h2o, dopc, dope, mass_density):
@@ -183,7 +183,7 @@ NA = 6.022e23 # Constante d'Avogadro
 BOX_LENGTH = 9.0 # 9 nm de longueur en x, y et z
 
 
-frame_nb = 100
+frame_nb = 5
 
 #─────────────────────────────────────── MAIN ─────────────────────────────────────────#
 
@@ -195,13 +195,13 @@ while(run):
     print("2. Calcul du profil de densité en fonction du nombre d'atomes")
     print("3. Quitter")
     print(72 * "─")
-    choix = input("Entrez votre choix [1-3] => ")
+    choix = raw_input("Entrez votre choix [1-3] => ")
 
-    if choix == 1:
+    if choix == '1':
         nb_slices = input("\nNombre de tranches pour la division de la boîte => ")
         h2o_final = [0] * (nb_slices + 1)
-        dope_final = [0] * (nb_slices + 1)
         dopc_final = [0] * (nb_slices + 1)
+        dope_final = [0] * (nb_slices + 1)
         slices = make_slices(nb_slices)  # Découpage de la boite en tranches
 
         print("\nConstruction du graphique en cours ...")
@@ -211,13 +211,13 @@ while(run):
             h2o_final = map(op.add, h2o_final, h2o)
             dopc_final = map(op.add, dopc_final, dopc)
             dope_final = map(op.add, dope_final, dope)
-        draw_density_profile(h2o, dopc, dope, True)
+        draw_density_profile(h2o_final, dopc_final, dope_final, True)
 
-    elif choix == 2:
+    elif choix == '2':
         nb_slices = input("\nNombre de tranches pour la division de la boîte => ")
         h2o_final = [0] * (nb_slices + 1)
-        dope_final = [0] * (nb_slices + 1)
         dopc_final = [0] * (nb_slices + 1)
+        dope_final = [0] * (nb_slices + 1)
         slices = make_slices(nb_slices)  # Découpage de la boite en tranches
 
         print("\nConstruction du graphique en cours ...")
@@ -227,10 +227,10 @@ while(run):
             h2o_final = map(op.add, h2o_final, h2o)
             dopc_final = map(op.add, dopc_final, dopc)
             dope_final = map(op.add, dope_final, dope)
-            h2o, dopc, dope = number_density(h2o_final, dopc_final, dope_final)
+        h2o, dopc, dope = number_density(h2o_final, dopc_final, dope_final)
         draw_density_profile(h2o, dopc, dope, False)
 
-    elif choix == 3:
+    elif choix == '3':
         run = False
 
     else:
